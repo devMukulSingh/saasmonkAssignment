@@ -6,7 +6,6 @@ import { fetcher } from "@/lib/utils";
 
 const MovieCards = () => {
   const { data: movies } = useSWR<Imovie[]>(`/api/movie/get-movies`, fetcher,{
-    
   });
   return (
     <div
