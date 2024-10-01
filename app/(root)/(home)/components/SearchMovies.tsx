@@ -14,8 +14,6 @@ const SearchMovies = ({
 
   const {
     data: movies,
-    isLoading,
-    mutate,
   } = useSWR<Imovie[]>(`/api/movie/get-movies`);
 
   const searchedMovies = movies?.filter( movie => movie.name.toLocaleLowerCase().includes(query.toLowerCase())) || [];

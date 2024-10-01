@@ -2,7 +2,7 @@
 
 export interface Imovie{
     name:string,
-    releaseDate:string,
+    releaseDate:Date,
     averageRating?:number,
     id:string
 }

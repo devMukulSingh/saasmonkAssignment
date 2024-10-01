@@ -1,15 +1,12 @@
 'use client'
-import React, { useEffect, useState } from 'react'
 import MovieCard from './MovieCard';
 import { Imovie } from '@/lib/types';
-import { prisma } from '@/lib/prisma';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/utils';
-import { useParams, useSearchParams } from 'next/navigation';
 
 const MovieCards = () => {
   
-  const {  data:movies,isLoading,mutate } = useSWR<Imovie[]>(`/api/movie/get-movies`,fetcher);
+  const {  data:movies } = useSWR<Imovie[]>(`/api/movie/get-movies`,fetcher);
     return (
       <div
         className="

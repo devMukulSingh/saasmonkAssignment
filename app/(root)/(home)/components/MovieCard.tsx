@@ -1,6 +1,6 @@
 import { Imovie, Ireview } from "@/lib/types";
 import { format } from "date-fns";
-import { Edit, Trash, Trash2 } from "lucide-react";
+import { Edit,  Trash2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import DeleteModal from "./DeleteModal";
@@ -23,7 +23,6 @@ async function sendRequest(url: string) {
 const MovieCard = ({ movie }: Props) => {
   const { mutate } = useSWRConfig();
   const [openDialog, setOpenDialog] = useState(false);
-  const router = useRouter();
 
   const { data:reviews} = useSWR<Ireview[]>(`/api/review/get-review?movieId=${movie.id}`,fetcher);
   const ratingsTotal =

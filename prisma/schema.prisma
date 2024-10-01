@@ -11,7 +11,7 @@ datasource db {
 model Movie{
   id                      String            @id@default(uuid())
   name                    String
-  releaseDate             String
+  releaseDate             DateTime
   averateRatings          Int?
   reviews                 Review[]          @relation("movieToReview")                       
 }

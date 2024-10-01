@@ -1,5 +1,5 @@
 'use client'
-import { Form, FormField } from '@/components/ui/form'
+import { Form,  } from '@/components/ui/form'
 import { movieSchema } from '@/lib/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
@@ -32,7 +32,7 @@ const MovieAddEditPage = () => {
   const router = useRouter();
   const { movieId  } = useParams()
   
-  const { data: movies, isLoading } = useSWR<Imovie[]>(
+  const { data: movies} = useSWR<Imovie[]>(
     `/api/movie/get-movies`,
   );
   const movieByMovieId = movies?.find( movie => movie.id===movieId) ;
@@ -54,9 +54,9 @@ const MovieAddEditPage = () => {
   );
   const form = useForm<formValues>({
     resolver:zodResolver(movieSchema),
-    defaultValues:movieByMovieId || {
-      name:'',
-      releaseDate:''
+    defaultValues: {
+      name:movieByMovieId?.name,
+      releaseDate:movieByMovieId?.releaseDate
     }
   })
   const onSubmit = (data: formValues) => {

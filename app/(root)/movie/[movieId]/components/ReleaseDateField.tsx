@@ -2,11 +2,9 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Iform } from "../page";
-import { Input } from "@/components/ui/input";
 import * as React from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -21,7 +19,6 @@ import {
 } from "@/components/ui/popover";
 
 const ReleaseDateField = ({ form, isMutating }: Iform) => {
-  const [date, setDate] = React.useState<Date>();
   return (
     <FormField
       control={form.control}
