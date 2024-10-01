@@ -4,7 +4,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Iform } from "../page";
 import * as React from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -17,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Iform } from "./MovieForm";
 
 const ReleaseDateField = ({ form, isMutating }: Iform) => {
   return (
