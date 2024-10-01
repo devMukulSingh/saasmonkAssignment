@@ -24,10 +24,7 @@ export interface Iform {
 async function sendRequest(url: string, { arg }: { arg: formValues }) {
   return await axios.post(url, arg);
 }
-async function sendRequestPUT(
-  url: string,
-  { arg }: { arg: formValues },
-) {
+async function sendRequestPUT(url: string, { arg }: { arg: formValues }) {
   return await axios.put(url, arg);
 }
 
