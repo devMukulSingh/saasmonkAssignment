@@ -8,7 +8,6 @@ import { fetcher } from '@/lib/utils';
 import { useParams, useSearchParams } from 'next/navigation';
 
 const MovieCards = () => {
-
   
   const {  data:movies,isLoading,mutate } = useSWR<Imovie[]>(`/api/movie/get-movies`,fetcher);
     return (

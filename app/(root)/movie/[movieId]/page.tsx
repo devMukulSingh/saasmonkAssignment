@@ -30,8 +30,7 @@ export async function sendRequestPUT(url: string, { arg }: { arg: formValues }) 
 
 const MovieAddEditPage = () => {
   const router = useRouter();
-  const { movieId  } = useParams();
-  console.log(movieId);
+  const { movieId  } = useParams()
   
   const { data: movies, isLoading } = useSWR<Imovie[]>(
     `/api/movie/get-movies`,

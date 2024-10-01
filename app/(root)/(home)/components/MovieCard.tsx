@@ -10,6 +10,7 @@ import useSWRMutation from "swr/mutation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { fetcher } from "@/lib/utils";
 
 type Props = {
   movie: Imovie;
@@ -24,21 +25,24 @@ const MovieCard = ({ movie }: Props) => {
   const [openDialog, setOpenDialog] = useState(false);
   const router = useRouter();
 
-  const { data:reviews} = useSWR<Ireview[]>(`/api/review/get-review?movieId=${movie.id}`);
-  const averageRating =
-    reviews?.reduce((prev, curr) => prev + curr.rating, 0) || 0
+  const { data:reviews} = useSWR<Ireview[]>(`/api/review/get-review?movieId=${movie.id}`,fetcher);
+  const ratingsTotal =
+    reviews?.reduce((prev, curr) => prev + curr.rating, 0) || 0;
+  
+    const averageRating = ratingsTotal/(reviews?.length || 0) 
+  
   
   const { trigger, isMutating } = useSWRMutation(
     `/api/movie/${movie.id}`,
     sendRequest,
     {
       onSuccess() {
-        toast.success(`Movie deleted`);
         mutate(
           (key) => true,
-          undefined, // update cache data to `undefined`
-          { revalidate: false } // do not revalidate
+          undefined, 
+          { revalidate: false } 
         );
+        toast.success(`Movie deleted`);
       },
       onError(e) {
         toast.error("Sowething went wrong, please try again later");
@@ -78,7 +82,7 @@ const MovieCard = ({ movie }: Props) => {
         <h1 className="italic">
           Released: {format(movie.releaseDate, "do MMMM, yyyy")}
         </h1>
-        <h1 className="font-bold">Ratings: { averageRating/(reviews?.length || 0)  || "N/A"}</h1>
+        <h1 className="font-bold">Ratings: { averageRating ? averageRating.toFixed() : "N/A"}</h1>
       </Link>
       <div
         className="

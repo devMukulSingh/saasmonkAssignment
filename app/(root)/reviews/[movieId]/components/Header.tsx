@@ -11,8 +11,10 @@ const Header = () => {
   const { data: reviews, isLoading } = useSWR<Ireview[]>(
     `/api/review/get-review?movieId=${movieId}`
   );
-  const averageRating =
-    reviews?.reduce((prev, curr) => prev + curr.rating, 0) ||0;
+  const ratingsTotal =
+    reviews?.reduce((prev, curr) => prev + curr.rating, 0) || 0;
+
+  const averageRating = ratingsTotal / (reviews?.length || 0);
 
   return (
     <div
@@ -28,7 +30,7 @@ const Header = () => {
         text-blue-600
         "
       >
-        { averageRating / (reviews?.length || 0) || 0 } /10
+        {averageRating ? averageRating.toFixed() : 0}/10
       </h1>
     </div>
   );
