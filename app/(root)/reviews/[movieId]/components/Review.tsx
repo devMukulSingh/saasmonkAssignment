@@ -1,25 +1,24 @@
-'use client'
-import DeleteModal from '@/app/(root)/(home)/components/DeleteModal'
-import { Button } from '@/components/ui/button'
-import { Ireview } from '@/lib/types'
-import axios from 'axios'
-import { Edit, Edit2, Trash2 } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
-import React, { useState } from 'react'
-import toast from 'react-hot-toast'
-import useSWRMutation from 'swr/mutation'
+"use client";
+import DeleteModal from "@/app/(root)/(home)/components/DeleteModal";
+import { Button } from "@/components/ui/button";
+import { Ireview } from "@/lib/types";
+import axios from "axios";
+import { Edit, Edit2, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import useSWRMutation from "swr/mutation";
 
 type Props = {
-    review :Ireview
-}
+  review: Ireview;
+};
 
-async function sendRequest(url:string){
+async function sendRequest(url: string) {
   return await axios.delete(url);
 }
 
-const Review = ({
-    review
-}:Props) => {
+const Review = ({ review }: Props) => {
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
   const { isMutating, trigger } = useSWRMutation(
@@ -36,16 +35,14 @@ const Review = ({
       },
     }
   );
-  const handleDelete = () => { 
-  try{
-    trigger();
-  }
-  catch(e:any){
-    console.log(e.message);
-    toast.error(`Something went wrong please try again later`);
-  }
-  
-  }
+  const handleDelete = () => {
+    try {
+      trigger();
+    } catch (e: any) {
+      console.log(e.message);
+      toast.error(`Something went wrong please try again later`);
+    }
+  };
   return (
     <div
       className="
@@ -66,11 +63,7 @@ const Review = ({
         "
       >
         <h1>{review.reviewComments}</h1>
-        <h1
-          className="text-blue-500"
-        >
-          {review.rating}/10
-        </h1>
+        <h1 className="text-blue-500">{review.rating}/10</h1>
       </div>
       <div
         className="
@@ -78,11 +71,7 @@ const Review = ({
         justify-between
         "
       >
-        <h1
-          className="italic"
-        >
-          By {review?.reviewerName || "N/A"}
-        </h1>
+        <h1 className="italic">By {review?.reviewerName || "N/A"}</h1>
         <div
           className="
         flex
@@ -91,29 +80,23 @@ const Review = ({
         text-neutral-500
         "
         >
-          <Edit
-            className="cursor-pointer"
-            size={20}
-          />
-          <DeleteModal 
-          onContinue={handleDelete}
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
-          disabled={isMutating}>
-
-          <Button variant={"ghost"}
-          size={"icon"}
+          <Link href={`/review/${review.id}`}>
+            <Edit className="cursor-pointer" size={20} />
+          </Link>
+          <DeleteModal
+            onContinue={handleDelete}
+            openDialog={openDialog}
+            setOpenDialog={setOpenDialog}
+            disabled={isMutating}
           >
-          <Trash2
-            className="cursor-pointer"
-            size={20}
-            />
+            <Button variant={"ghost"} size={"icon"}>
+              <Trash2 className="cursor-pointer" size={20} />
             </Button>
-            </DeleteModal>
+          </DeleteModal>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Review
+export default Review;
