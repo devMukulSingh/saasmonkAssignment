@@ -1,20 +1,17 @@
-'use client'
+"use client";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { KeyboardEvent, useState } from "react";
 
-const SearchBar = ({
-
-}) => {
+const SearchBar = ({}) => {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
-    if(e.key==='Enter' && query!==''){
-      router.push(`/?query=${query}`)
+    if (e.key === "Enter" && query !== "") {
+      router.push(`/?query=${query}`);
     }
-  }
-  ;
+  };
   return (
     <div
       className="
@@ -34,7 +31,7 @@ const SearchBar = ({
     >
       <Search />
       <Input
-        onKeyUp={ e => handleSearch(e)}
+        onKeyUp={(e) => handleSearch(e)}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className="h border-none e"

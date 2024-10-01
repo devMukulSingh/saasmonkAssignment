@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { ReactNode } from "react";
 
-
 type Props = {
   children?: ReactNode;
   onContinue: () => void;
@@ -20,9 +19,15 @@ type Props = {
   openDialog: boolean;
 };
 
-const DeleteModal = ({ children, onContinue, disabled,openDialog,setOpenDialog }: Props) => {
+const DeleteModal = ({
+  children,
+  onContinue,
+  disabled,
+  openDialog,
+  setOpenDialog,
+}: Props) => {
   return (
-    <AlertDialog open={openDialog} onOpenChange={setOpenDialog} >
+    <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
       <AlertDialogTrigger onClick={(e) => e.stopPropagation()}>
         {children}
       </AlertDialogTrigger>
@@ -35,7 +40,7 @@ const DeleteModal = ({ children, onContinue, disabled,openDialog,setOpenDialog }
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={disabled}>Cancel</AlertDialogCancel>
-          <AlertDialogAction  disabled={disabled} onClick={onContinue}>
+          <AlertDialogAction disabled={disabled} onClick={onContinue}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -1,13 +1,14 @@
-import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import React from 'react'
-import { Iform } from '../page';
-import { Input } from '@/components/ui/input';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import React from "react";
+import { Iform } from "../page";
+import { Input } from "@/components/ui/input";
 
-
-
-const MovieNameField = ({
-  form,isMutating
-}:Iform) => {
+const MovieNameField = ({ form, isMutating }: Iform) => {
   return (
     <>
       <FormField
@@ -24,7 +25,6 @@ const MovieNameField = ({
       />
     </>
   );
+};
 
-}
-
-export default MovieNameField
+export default MovieNameField;

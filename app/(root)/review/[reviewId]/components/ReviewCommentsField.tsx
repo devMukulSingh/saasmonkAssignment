@@ -17,10 +17,7 @@ const ReviewCommentsField = ({ form }: Iform) => {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Textarea 
-              rows={4}
-              {...field} 
-              placeholder="Review comments" />
+              <Textarea rows={4} {...field} placeholder="Review comments" />
             </FormControl>
             <FormMessage />
           </FormItem>

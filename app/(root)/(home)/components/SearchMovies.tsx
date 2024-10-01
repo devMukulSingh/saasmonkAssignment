@@ -1,22 +1,20 @@
-'use client'
+"use client";
 
 import { Imovie } from "@/lib/types";
 import useSWR from "swr";
 import MovieCard from "./MovieCard";
 
 type Props = {
-    query:string
-}
+  query: string;
+};
 
-const SearchMovies = ({
-    query
-}:Props) => {
+const SearchMovies = ({ query }: Props) => {
+  const { data: movies } = useSWR<Imovie[]>(`/api/movie/get-movies`);
 
-  const {
-    data: movies,
-  } = useSWR<Imovie[]>(`/api/movie/get-movies`);
-
-  const searchedMovies = movies?.filter( movie => movie.name.toLocaleLowerCase().includes(query.toLowerCase())) || [];
+  const searchedMovies =
+    movies?.filter((movie) =>
+      movie.name.toLocaleLowerCase().includes(query.toLowerCase()),
+    ) || [];
 
   return (
     <div
@@ -28,16 +26,15 @@ const SearchMovies = ({
       gap-8
       "
     >
-      {searchedMovies?.length >0 ? (
+      {searchedMovies?.length > 0 ? (
         searchedMovies.map((movie, index) => (
           <MovieCard movie={movie} key={index} />
         ))
       ) : (
-          <h1>No movies found</h1>
+        <h1>No movies found</h1>
       )}
     </div>
   );
+};
 
-}
-
-export default SearchMovies
+export default SearchMovies;

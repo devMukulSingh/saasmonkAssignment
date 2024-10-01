@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
   req: NextRequest,
 
-  { params }: { params: { reviewId: string } }
+  { params }: { params: { reviewId: string } },
 ) {
   try {
     const { movieId, reviewerName, rating, reviewComments } = await req.json();
@@ -16,7 +16,7 @@ export async function PUT(
         {
           error: "movieId is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
 
     if (!rating)
@@ -24,7 +24,7 @@ export async function PUT(
         {
           error: "rating is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
 
     if (!reviewComments)
@@ -32,7 +32,7 @@ export async function PUT(
         {
           error: "reviewComments is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
 
     const updatedReview = await prisma.review.update({
@@ -58,19 +58,17 @@ export async function PUT(
         error: "Internal server error in Edit review PUT api",
         e,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-
 export async function DELETE(
   req: NextRequest,
 
-  { params }: { params: { reviewId: string } }
+  { params }: { params: { reviewId: string } },
 ) {
   try {
-
     const { reviewId } = params;
 
     if (!reviewId)
@@ -78,7 +76,7 @@ export async function DELETE(
         {
           error: "reviewId is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
 
     const deletedReview = await prisma.review.delete({
@@ -95,22 +93,21 @@ export async function DELETE(
         error: "Internal server error in Delete review DELETE api",
         e,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-
-
-export async function GET(req: NextRequest, 
-    { params }: { params: { reviewId: string } }
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { reviewId: string } },
 ) {
   try {
     const { reviewId } = params;
     const review = await prisma.review.findFirst({
-      where:{
-        id:reviewId
-      }
+      where: {
+        id: reviewId,
+      },
     });
     return NextResponse.json(review, { status: 200 });
   } catch (e) {
@@ -120,8 +117,7 @@ export async function GET(req: NextRequest,
         error: "Internal server error in get review GET api",
         e,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
-

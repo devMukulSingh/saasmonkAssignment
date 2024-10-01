@@ -13,8 +13,8 @@ const ReviewsPage = () => {
     py-10
     "
     >
-      <Header/>
-      <AllReviews/>
+      <Header />
+      <AllReviews />
     </div>
   );
 };

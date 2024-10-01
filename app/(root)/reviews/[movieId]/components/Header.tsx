@@ -9,7 +9,7 @@ const Header = () => {
   const { data: movies } = useSWR<Imovie[]>(`/api/movie/get-movies`);
   const movie = movies?.find((movie) => movie.id === movieId);
   const { data: reviews, isLoading } = useSWR<Ireview[]>(
-    `/api/review/get-review?movieId=${movieId}`
+    `/api/review/get-review?movieId=${movieId}`,
   );
   const ratingsTotal =
     reviews?.reduce((prev, curr) => prev + curr.rating, 0) || 0;

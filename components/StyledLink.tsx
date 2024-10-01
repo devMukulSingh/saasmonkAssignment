@@ -1,12 +1,12 @@
-import { cn } from '@/lib/utils'
-import Link from 'next/link';
-import React, { ReactNode } from 'react'
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import React, { ReactNode } from "react";
 
 type Props = {
-    children:ReactNode,
-    className?:string,
-    href:string
-}
+  children: ReactNode;
+  className?: string;
+  href: string;
+};
 
 const StyledLink = ({ children, className, href }: Props) => {
   return (
@@ -28,7 +28,7 @@ const StyledLink = ({ children, className, href }: Props) => {
         font-medium 
         transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
         `,
-        className
+        className,
       )}
     >
       {children}
@@ -36,4 +36,4 @@ const StyledLink = ({ children, className, href }: Props) => {
   );
 };
 
-export default StyledLink
+export default StyledLink;

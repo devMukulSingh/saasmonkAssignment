@@ -4,7 +4,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import React, {  } from "react";
+import React from "react";
 import { Iform } from "../page";
 import {
   Select,
@@ -18,7 +18,10 @@ import useSWR from "swr";
 import { Imovie } from "@/lib/types";
 
 const MovieNameField = ({ form }: Iform) => {
-  const { data:movies,isLoading } = useSWR<Imovie[]>(`/api/movie/get-movies`,fetcher);
+  const { data: movies, isLoading } = useSWR<Imovie[]>(
+    `/api/movie/get-movies`,
+    fetcher,
+  );
   return (
     <>
       <FormField
@@ -37,11 +40,11 @@ const MovieNameField = ({ form }: Iform) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {movies?.map( (movie,index) => (
+                {movies?.map((movie, index) => (
                   <SelectItem key={index} value={movie.id}>
                     {movie.name}
                   </SelectItem>
-                ) )}
+                ))}
               </SelectContent>
             </Select>
             <FormMessage />

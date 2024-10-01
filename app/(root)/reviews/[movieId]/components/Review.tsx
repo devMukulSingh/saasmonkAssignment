@@ -20,7 +20,7 @@ async function sendRequest(url: string) {
 }
 
 const Review = ({ review }: Props) => {
-  const {  mutate } = useSWRConfig();
+  const { mutate } = useSWRConfig();
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
   const { isMutating, trigger } = useSWRMutation(
@@ -28,11 +28,11 @@ const Review = ({ review }: Props) => {
     sendRequest,
     {
       onSuccess() {
-          mutate(
-            (key) => true,
-            undefined, // update cache data to `undefined`
-            { revalidate: false } // do not revalidate
-          );
+        mutate(
+          (key) => true,
+          undefined, // update cache data to `undefined`
+          { revalidate: false }, // do not revalidate
+        );
         router.push("/");
         toast.success("Review deleted");
       },
@@ -40,7 +40,7 @@ const Review = ({ review }: Props) => {
         console.log(e.message);
         toast.error(`Something went wrong please try again later`);
       },
-    }
+    },
   );
   const handleDelete = () => {
     try {

@@ -21,21 +21,24 @@ export type formValues = z.infer<typeof reviewSchema>;
 
 export interface Iform {
   form: UseFormReturn<formValues, any, undefined>;
-  isMutating:boolean
+  isMutating: boolean;
 }
 
-async function sendRequestPOST(url:string,{arg} : {arg:formValues}){
-  return await axios.post(url,arg);
+async function sendRequestPOST(url: string, { arg }: { arg: formValues }) {
+  return await axios.post(url, arg);
 }
 async function sendRequestPUT(url: string, { arg }: { arg: formValues }) {
   return await axios.put(url, arg);
 }
 const ReviewAddEditPage = () => {
-  const {mutate} = useSWRConfig();
+  const { mutate } = useSWRConfig();
   const { reviewId } = useParams();
   const router = useRouter();
-  const { data:reviewByReviewId,isLoading } = useSWR(reviewId!=='new' ? `/api/review/${reviewId} `:null,fetcher);
-  
+  const { data: reviewByReviewId, isLoading } = useSWR(
+    reviewId !== "new" ? `/api/review/${reviewId} ` : null,
+    fetcher,
+  );
+
   const { isMutating, trigger } = useSWRMutation(
     !reviewByReviewId ? `/api/review/add-review` : `/api/review/${reviewId}`,
     !reviewByReviewId ? sendRequestPOST : sendRequestPUT,
@@ -44,35 +47,33 @@ const ReviewAddEditPage = () => {
         mutate(
           (key) => true,
           undefined, // update cache data to `undefined`
-          { revalidate: false } // do not revalidate
+          { revalidate: false }, // do not revalidate
         );
         router.back();
-        toast.success(reviewByReviewId ? "Review updated":"Review added");
+        toast.success(reviewByReviewId ? "Review updated" : "Review added");
         form.reset();
       },
-      onError(e:any) {
+      onError(e: any) {
         toast.error("Something went wrong, please try again later");
         console.log(e.message);
       },
-    }
+    },
   );
   const form = useForm<formValues>({
     resolver: zodResolver(reviewSchema),
-    defaultValues:reviewByReviewId || {
-      rating:null,
-      reviewComments:'',
-      reviewerName:''
-    }
+    defaultValues: reviewByReviewId || {
+      rating: null,
+      reviewComments: "",
+      reviewerName: "",
+    },
   });
   const onSubmit = (data: formValues) => {
-    try{
+    try {
       trigger(data);
+    } catch (e: any) {
+      toast.error("Something went wrong, please try again later");
+      console.log(e.message);
     }
-    catch(e:any){
-       toast.error("Something went wrong, please try again later");
-       console.log(e.message);
-    }
-    
   };
   return (
     <div

@@ -1,6 +1,6 @@
 import { Imovie, Ireview } from "@/lib/types";
 import { format } from "date-fns";
-import { Edit,  Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import DeleteModal from "./DeleteModal";
@@ -24,30 +24,28 @@ const MovieCard = ({ movie }: Props) => {
   const { mutate } = useSWRConfig();
   const [openDialog, setOpenDialog] = useState(false);
 
-  const { data:reviews} = useSWR<Ireview[]>(`/api/review/get-review?movieId=${movie.id}`,fetcher);
+  const { data: reviews } = useSWR<Ireview[]>(
+    `/api/review/get-review?movieId=${movie.id}`,
+    fetcher,
+  );
   const ratingsTotal =
     reviews?.reduce((prev, curr) => prev + curr.rating, 0) || 0;
-  
-    const averageRating = ratingsTotal/(reviews?.length || 0) 
-  
-  
+
+  const averageRating = ratingsTotal / (reviews?.length || 0);
+
   const { trigger, isMutating } = useSWRMutation(
     `/api/movie/${movie.id}`,
     sendRequest,
     {
       onSuccess() {
-        mutate(
-          (key) => true,
-          undefined, 
-          { revalidate: false } 
-        );
+        mutate((key) => true, undefined, { revalidate: false });
         toast.success(`Movie deleted`);
       },
       onError(e) {
         toast.error("Sowething went wrong, please try again later");
         console.log(e.message);
       },
-    }
+    },
   );
   const handleDeleteMovie = async () => {
     try {
@@ -81,7 +79,9 @@ const MovieCard = ({ movie }: Props) => {
         <h1 className="italic">
           Released: {format(movie.releaseDate, "do MMMM, yyyy")}
         </h1>
-        <h1 className="font-bold">Ratings: { averageRating ? averageRating.toFixed() : "N/A"}</h1>
+        <h1 className="font-bold">
+          Ratings: {averageRating ? averageRating.toFixed() : "N/A"}
+        </h1>
       </Link>
       <div
         className="
