@@ -14,7 +14,7 @@ export const movieSchema = z.object({
 })
 
 export const reviewSchema = z.object({
-    movieName: z.string({
+    movieId: z.string({
         required_error: 'Movie name is required'
     }).min(1,{
         message: 'Movie name is required'

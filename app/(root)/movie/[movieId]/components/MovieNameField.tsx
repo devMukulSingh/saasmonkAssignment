@@ -6,21 +6,22 @@ import { Input } from '@/components/ui/input';
 
 
 const MovieNameField = ({
-  form
+  form,isMutating
 }:Iform) => {
   return (
     <>
-      <FormField 
-      name="name" 
-      control={form.control} 
-      render={({field}) => (
-        <FormItem>
-          <FormControl>
-            <Input {...field} placeholder='Name'/>
-          </FormControl>
-          <FormMessage/>
-        </FormItem>
-      )} />
+      <FormField
+        name="name"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input disabled={isMutating} {...field} placeholder="Name" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </>
   );
 

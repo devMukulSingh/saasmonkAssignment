@@ -2,16 +2,10 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import React from "react";
+import React, {  } from "react";
 import { Iform } from "../page";
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -19,25 +13,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { fetcher } from "@/lib/utils";
+import useSWR from "swr";
+import { Imovie } from "@/lib/types";
 
 const MovieNameField = ({ form }: Iform) => {
+  const { data:movies,isLoading } = useSWR<Imovie[]>(`/api/movie/get-movies`,fetcher);
   return (
     <>
       <FormField
-        name="movieName"
+        name="movieId"
         control={form.control}
         render={({ field }) => (
           <FormItem>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select
+              disabled={isLoading}
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+            >
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a movie" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="m@example.com">m@example.com</SelectItem>
-                <SelectItem value="m@google.com">m@google.com</SelectItem>
-                <SelectItem value="m@support.com">m@support.com</SelectItem>
+                {movies?.map( (movie,index) => (
+                  <SelectItem key={index} value={movie.id}>
+                    {movie.name}
+                  </SelectItem>
+                ) )}
               </SelectContent>
             </Select>
             <FormMessage />

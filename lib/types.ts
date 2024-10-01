@@ -4,11 +4,11 @@ export interface Imovie{
     name:string,
     releaseDate:string,
     averageRating?:number,
-    id:number
+    id:string
 }
 
 export interface Ireview {
-    movieId: number,
+    movieId: string,
     reviewerName?: string,
     rating: number,
     reviewComments:string

@@ -20,10 +20,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const ReleaseDateField = ({
-  form
-}:Iform) => {
-    const [date, setDate] = React.useState<Date>();
+const ReleaseDateField = ({ form, isMutating }: Iform) => {
+  const [date, setDate] = React.useState<Date>();
   return (
     <FormField
       control={form.control}
@@ -34,6 +32,7 @@ const ReleaseDateField = ({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
+                  disabled={isMutating}
                   variant={"outline"}
                   className={cn(
                     "w-[240px] pl-3 text-left font-normal",
