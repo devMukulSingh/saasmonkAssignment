@@ -43,6 +43,7 @@ const MovieCard = ({ movie }: Props) => {
       populateCache:true,
       revalidate:true,
       onSuccess() {
+        mutate(`/api/review/get-review?movieId=${movie.id}`);
         toast.success(`Movie deleted`);
         router.refresh();
       },
