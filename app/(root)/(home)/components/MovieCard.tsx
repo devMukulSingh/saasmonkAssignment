@@ -41,6 +41,7 @@ const MovieCard = ({ movie }: Props) => {
     sendRequest,
     {
       populateCache:true,
+      revalidate:true,
       onSuccess() {
        router.refresh();
         toast.success(`Movie deleted`);
