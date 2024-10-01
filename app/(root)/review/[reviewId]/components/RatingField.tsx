@@ -6,8 +6,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import React from "react";
-import { Iform } from "../page";
 import { Input } from "@/components/ui/input";
+import { Iform } from "./ReviewForm";
 
 const RatingField = ({ form }: Iform) => {
   return (

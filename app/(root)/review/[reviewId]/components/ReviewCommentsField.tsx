@@ -5,7 +5,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import React from "react";
-import { Iform } from "../page";
+import { Iform } from "./ReviewForm";
 import { Textarea } from "@/components/ui/textarea";
 
 const ReviewCommentsField = ({ form }: Iform) => {

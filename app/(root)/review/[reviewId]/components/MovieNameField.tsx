@@ -5,7 +5,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import React from "react";
-import { Iform } from "../page";
 import {
   Select,
   SelectContent,
@@ -16,6 +15,7 @@ import {
 import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 import { Imovie } from "@/lib/types";
+import { Iform } from "./ReviewForm";
 
 const MovieNameField = ({ form }: Iform) => {
   const { data: movies, isLoading } = useSWR<Imovie[]>(
