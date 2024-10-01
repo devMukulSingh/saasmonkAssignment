@@ -1,14 +1,51 @@
+'use client'
+import DeleteModal from '@/app/(root)/(home)/components/DeleteModal'
+import { Button } from '@/components/ui/button'
 import { Ireview } from '@/lib/types'
+import axios from 'axios'
 import { Edit, Edit2, Trash2 } from 'lucide-react'
-import React from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+import toast from 'react-hot-toast'
+import useSWRMutation from 'swr/mutation'
 
 type Props = {
     review :Ireview
 }
 
+async function sendRequest(url:string){
+  return await axios.delete(url);
+}
+
 const Review = ({
     review
 }:Props) => {
+  const router = useRouter();
+  const [openDialog, setOpenDialog] = useState(false);
+  const { isMutating, trigger } = useSWRMutation(
+    `/api/review/${review.id}`,
+    sendRequest,
+    {
+      onSuccess() {
+        router.push("/");
+        toast.success("Review deleted");
+      },
+      onError(e) {
+        console.log(e.message);
+        toast.error(`Something went wrong please try again later`);
+      },
+    }
+  );
+  const handleDelete = () => { 
+  try{
+    trigger();
+  }
+  catch(e:any){
+    console.log(e.message);
+    toast.error(`Something went wrong please try again later`);
+  }
+  
+  }
   return (
     <div
       className="
@@ -49,18 +86,30 @@ const Review = ({
         <div
           className="
         flex
+        items-center
         gap-2
         text-neutral-500
         "
         >
           <Edit
             className="cursor-pointer"
-            size={15}
+            size={20}
           />
+          <DeleteModal 
+          onContinue={handleDelete}
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          disabled={isMutating}>
+
+          <Button variant={"ghost"}
+          size={"icon"}
+          >
           <Trash2
             className="cursor-pointer"
-            size={15}
-          />
+            size={20}
+            />
+            </Button>
+            </DeleteModal>
         </div>
       </div>
     </div>

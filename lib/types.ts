@@ -9,6 +9,7 @@ export interface Imovie{
 
 export interface Ireview {
     movieId: string,
+    id:string,
     reviewerName?: string,
     rating: number,
     reviewComments:string
