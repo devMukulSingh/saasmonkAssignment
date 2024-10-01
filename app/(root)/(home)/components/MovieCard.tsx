@@ -69,6 +69,7 @@ const MovieCard = ({ movie }: Props) => {
     "
     >
       <Link
+        prefetch={false}
         className="    
       flex
       flex-col
@@ -98,7 +99,7 @@ const MovieCard = ({ movie }: Props) => {
     w-fit
     "
       >
-        <Link href={`movie/${movie.id}`}>
+        <Link prefetch={false} href={`movie/${movie.id}`}>
           <Edit size={20} />
         </Link>
         <DeleteModal

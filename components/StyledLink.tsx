@@ -11,6 +11,7 @@ type Props = {
 const StyledLink = ({ children, className, href }: Props) => {
   return (
     <Link
+      prefetch={false}
       href={href}
       className={cn(
         `inline-flex 
@@ -28,7 +29,7 @@ const StyledLink = ({ children, className, href }: Props) => {
         font-medium 
         transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
         `,
-        className,
+        className
       )}
     >
       {children}

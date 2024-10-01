@@ -41,11 +41,11 @@ const MovieAddEditPage = () => {
     !movieByMovieId ? sendRequest : sendRequestPUT,
     {
       onSuccess() {
-         mutate(
-           (key) => true,
-           undefined, // update cache data to `undefined`
-           { revalidate: false } // do not revalidate
-         );
+        mutate(
+          (key) => true,
+          undefined, // update cache data to `undefined`
+          { revalidate: false }, // do not revalidate
+        );
         toast.success(!movieByMovieId ? "Movie added" : "Movie updated");
         movieByMovieId && router.push("/");
         form.reset();
