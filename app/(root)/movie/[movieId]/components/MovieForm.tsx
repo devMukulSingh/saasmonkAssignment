@@ -39,8 +39,6 @@ const MovieForm = ({
   const router = useRouter();
   const { movieId } = useParams();
 
-  
-
   const { trigger, isMutating } = useSWRMutation(
     movieId === "new" ? "/api/movie/add-movie" : `/api/movie/${movieId}`,
     movieId === "new" ? sendRequest : sendRequestPUT,
