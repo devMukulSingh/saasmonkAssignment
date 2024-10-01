@@ -27,7 +27,8 @@ const Review = ({ review }: Props) => {
     `/api/review/${review.id}`,
     sendRequest,
     {
-      revalidate: true,
+      populateCache: true,
+
       onSuccess() {
         router.refresh();
         router.push("/");

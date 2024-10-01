@@ -42,14 +42,15 @@ const ReviewForm = ({ intialValues }: Props) => {
   const router = useRouter();
 
   const { isMutating, trigger } = useSWRMutation(
-    reviewId==='new' ? `/api/review/add-review` : `/api/review/${reviewId}`,
-    reviewId==='new' ? sendRequestPOST : sendRequestPUT,
+    reviewId === "new" ? `/api/review/add-review` : `/api/review/${reviewId}`,
+    reviewId === "new" ? sendRequestPOST : sendRequestPUT,
     {
-      revalidate:true,
+      populateCache: true,
+
       onSuccess() {
-       router.refresh();
+        router.refresh();
         router.back();
-        toast.success(reviewId!=='new' ? "Review updated" : "Review added");
+        toast.success(reviewId !== "new" ? "Review updated" : "Review added");
         form.reset();
       },
       onError(e: any) {

@@ -45,7 +45,8 @@ const MovieForm = ({
     movieId === "new" ? "/api/movie/add-movie" : `/api/movie/${movieId}`,
     movieId === "new" ? sendRequest : sendRequestPUT,
     {
-      revalidate: true,
+      populateCache: true,
+
       onSuccess() {
         router.refresh();
 
