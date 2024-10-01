@@ -43,7 +43,9 @@ const MovieCard = ({
     right-2
     bottom-3
     '>
-        <Edit size={20}/>
+        <Link href={`movie/${movie.id}`}>
+          <Edit size={20}/>
+        </Link>
         <Trash2 size={20}/>
     </div>
     </Link>

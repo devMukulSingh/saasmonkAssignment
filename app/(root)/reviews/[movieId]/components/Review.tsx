@@ -29,9 +29,11 @@ const Review = ({
         "
       >
         <h1>{review.reviewComments}</h1>
-        <h1 className='
-        text-blue-500
-        '>{review.rating}/10</h1>
+        <h1
+          className="text-blue-500"
+        >
+          {review.rating}/10
+        </h1>
       </div>
       <div
         className="
@@ -39,18 +41,26 @@ const Review = ({
         justify-between
         "
       >
-        <h1 className='
-        italic
-
-        '>By {review?.reviewerName || 'N/A'}
+        <h1
+          className="italic"
+        >
+          By {review?.reviewerName || "N/A"}
         </h1>
-        <div className='
+        <div
+          className="
         flex
         gap-2
         text-neutral-500
-        '>
-            <Edit size={15}/>
-            <Trash2 size={15}/>
+        "
+        >
+          <Edit
+            className="cursor-pointer"
+            size={15}
+          />
+          <Trash2
+            className="cursor-pointer"
+            size={15}
+          />
         </div>
       </div>
     </div>
