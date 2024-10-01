@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(
   req: NextRequest,
-  res: NextResponse,
+
   { params }: { params: { reviewId: string } }
 ) {
   try {
@@ -66,7 +66,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  res: NextResponse,
+
   { params }: { params: { reviewId: string } }
 ) {
   try {
@@ -102,7 +102,7 @@ export async function DELETE(
 
 
 
-export async function GET(req: NextRequest, res: NextResponse,
+export async function GET(req: NextRequest, 
     { params }: { params: { reviewId: string } }
 ) {
   try {

@@ -19,7 +19,7 @@ model Movie{
 model Review{
   id                          String                @id@default(uuid())
   movieId                     String
-  movie                       Movie                 @relation("movieToReview",fields: [movieId],references: [id])
+  movie                       Movie                 @relation("movieToReview",fields: [movieId],references: [id],onDelete: Cascade)
   reviewerName                String?
   rating                      Int
   reviewComments              String                @db.VarChar(500)

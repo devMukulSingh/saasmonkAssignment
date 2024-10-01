@@ -47,7 +47,7 @@ export async function PUT(req: NextRequest,
     }
 }
 
-export async function DELETE(req: NextRequest, res: NextResponse,
+export async function DELETE(req: NextRequest,
     { params }: { params: { movieId: string } },
 ) {
     try {
