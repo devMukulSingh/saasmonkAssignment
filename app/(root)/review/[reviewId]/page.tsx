@@ -14,7 +14,7 @@ import useSWRMutation from "swr/mutation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { fetcher } from "@/lib/utils";
 
 export type formValues = z.infer<typeof reviewSchema>;
@@ -31,6 +31,7 @@ async function sendRequestPUT(url: string, { arg }: { arg: formValues }) {
   return await axios.put(url, arg);
 }
 const ReviewAddEditPage = () => {
+  const {mutate} = useSWRConfig();
   const { reviewId } = useParams();
   const router = useRouter();
   const { data:reviewByReviewId,isLoading } = useSWR(reviewId!=='new' ? `/api/review/${reviewId} `:null,fetcher);
@@ -40,6 +41,11 @@ const ReviewAddEditPage = () => {
     !reviewByReviewId ? sendRequestPOST : sendRequestPUT,
     {
       onSuccess() {
+        mutate(
+          (key) => true,
+          undefined, // update cache data to `undefined`
+          { revalidate: false } // do not revalidate
+        );
         router.back();
         toast.success(reviewByReviewId ? "Review updated":"Review added");
         form.reset();

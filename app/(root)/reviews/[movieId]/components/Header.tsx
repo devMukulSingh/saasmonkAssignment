@@ -1,6 +1,19 @@
+"use client";
+import { Imovie, Ireview } from "@/lib/types";
+import { useParams } from "next/navigation";
 import React from "react";
+import useSWR from "swr";
 
 const Header = () => {
+  const { movieId } = useParams();
+  const { data: movies } = useSWR<Imovie[]>(`/api/movie/get-movies`);
+  const movie = movies?.find((movie) => movie.id === movieId);
+  const { data: reviews, isLoading } = useSWR<Ireview[]>(
+    `/api/review/get-review?movieId=${movieId}`
+  );
+  const averageRating =
+    reviews?.reduce((prev, curr) => prev + curr.rating, 0) ||0;
+
   return (
     <div
       className="
@@ -9,16 +22,13 @@ const Header = () => {
        text-2xl
       "
     >
-      <h1
-      >
-        Star Wars: A New Hope
-      </h1>
+      <h1>{movie?.name}</h1>
       <h1
         className="
         text-blue-600
         "
       >
-        8.33/10
+        { averageRating / (reviews?.length || 0) || 0 } /10
       </h1>
     </div>
   );

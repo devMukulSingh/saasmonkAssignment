@@ -36,12 +36,7 @@ const MovieAddEditPage = () => {
   const { data: movies, isLoading } = useSWR<Imovie[]>(
     `/api/movie/get-movies`,
   );
-  const movieByMovieId = movies?.find( movie => movie.id===movieId) || {
-    name:'',
-    releaseDate:''
-  };
-
-
+  const movieByMovieId = movies?.find( movie => movie.id===movieId) ;
 
   const { trigger, isMutating } = useSWRMutation(
     !movieByMovieId ? "/api/movie/add-movie" : `/api/movie/${movieId}`,
@@ -60,7 +55,10 @@ const MovieAddEditPage = () => {
   );
   const form = useForm<formValues>({
     resolver:zodResolver(movieSchema),
-    defaultValues:movieByMovieId
+    defaultValues:movieByMovieId || {
+      name:'',
+      releaseDate:''
+    }
   })
   const onSubmit = (data: formValues) => {
     trigger(data)

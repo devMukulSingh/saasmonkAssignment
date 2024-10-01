@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { useSWRConfig } from "swr";
 import useSWRMutation from "swr/mutation";
 
 type Props = {
@@ -19,6 +20,7 @@ async function sendRequest(url: string) {
 }
 
 const Review = ({ review }: Props) => {
+  const {  mutate } = useSWRConfig();
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
   const { isMutating, trigger } = useSWRMutation(
@@ -26,6 +28,11 @@ const Review = ({ review }: Props) => {
     sendRequest,
     {
       onSuccess() {
+          mutate(
+            (key) => true,
+            undefined, // update cache data to `undefined`
+            { revalidate: false } // do not revalidate
+          );
         router.push("/");
         toast.success("Review deleted");
       },

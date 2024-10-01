@@ -22,7 +22,6 @@ const AllReviews = () => {
     },
 
   );
-  console.log(reviews);
   
 
   return (

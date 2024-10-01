@@ -1,4 +1,4 @@
-import { Imovie } from "@/lib/types";
+import { Imovie, Ireview } from "@/lib/types";
 import { format } from "date-fns";
 import { Edit, Trash, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -21,9 +21,13 @@ async function sendRequest(url: string) {
 
 const MovieCard = ({ movie }: Props) => {
   const { mutate } = useSWRConfig();
-
   const [openDialog, setOpenDialog] = useState(false);
   const router = useRouter();
+
+  const { data:reviews} = useSWR<Ireview[]>(`/api/review/get-review?movieId=${movie.id}`);
+  const averageRating =
+    reviews?.reduce((prev, curr) => prev + curr.rating, 0) || 0
+  
   const { trigger, isMutating } = useSWRMutation(
     `/api/movie/${movie.id}`,
     sendRequest,
@@ -74,7 +78,7 @@ const MovieCard = ({ movie }: Props) => {
         <h1 className="italic">
           Released: {format(movie.releaseDate, "do MMMM, yyyy")}
         </h1>
-        <h1 className="font-bold">Ratings: {movie?.averageRating || "N/A"}</h1>
+        <h1 className="font-bold">Ratings: { averageRating/(reviews?.length || 0)  || "N/A"}</h1>
       </Link>
       <div
         className="
