@@ -61,11 +61,7 @@ const ReviewAddEditPage = () => {
   );
   const form = useForm<formValues>({
     resolver: zodResolver(reviewSchema),
-    defaultValues: reviewByReviewId || {
-      rating: null,
-      reviewComments: "",
-      reviewerName: "",
-    },
+    defaultValues: reviewByReviewId
   });
   const onSubmit = (data: formValues) => {
     try {
