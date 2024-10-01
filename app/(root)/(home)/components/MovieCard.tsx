@@ -29,6 +29,7 @@ const MovieCard = ({ movie }: Props) => {
   const { data: reviews } = useSWR<Ireview[]>(
     `/api/review/get-review?movieId=${movie.id}`,
     fetcher,
+    
   );
   const ratingsTotal =
     reviews?.reduce((prev, curr) => prev + curr.rating, 0) || 0;
@@ -39,8 +40,9 @@ const MovieCard = ({ movie }: Props) => {
     `/api/movie/${movie.id}`,
     sendRequest,
     {
+      populateCache:true,
+      revalidate:true,
       onSuccess() {
-      
        router.refresh();
         toast.success(`Movie deleted`);
       },
