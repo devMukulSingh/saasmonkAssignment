@@ -32,18 +32,12 @@ async function sendRequestPUT(url: string, { arg }: { arg: formValues }) {
   return await axios.put(url, arg);
 }
 const ReviewAddEditPage = () => {
-  const [defaultFormVal, setDefaultFormVal] = useState<Ireview>()
   const { mutate } = useSWRConfig();
   const { reviewId } = useParams();
   const router = useRouter();
   const { data: reviewByReviewId, isLoading } = useSWR<Ireview>(
     reviewId !== "new" ? `/api/review/${reviewId} ` : null,
-    fetcher,
-    {
-      onSuccess(data){
-        setDefaultFormVal(data);
-      }
-    }
+
   );
 
   const { isMutating, trigger } = useSWRMutation(
@@ -68,7 +62,7 @@ const ReviewAddEditPage = () => {
   );
   const form = useForm<formValues>({
     resolver: zodResolver(reviewSchema),
-    defaultValues: defaultFormVal,
+    defaultValues: reviewByReviewId
   });
   const onSubmit = (data: formValues) => {
     try {
