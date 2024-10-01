@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <Fragment>
       <SearchBar />
-        {query ? <SearchMovies query={query} /> : <MovieCards />}
+      {query ? <SearchMovies query={query} /> : <MovieCards />}
     </Fragment>
   );
 };

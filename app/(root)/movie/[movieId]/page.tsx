@@ -12,7 +12,7 @@ import useSWRMutation from "swr/mutation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { Imovie } from "@/lib/types";
 
 export type formValues = z.infer<typeof movieSchema>;
@@ -29,6 +29,7 @@ async function sendRequestPUT(url: string, { arg }: { arg: formValues }) {
 }
 
 const MovieAddEditPage = () => {
+  const { mutate } = useSWRConfig();
   const router = useRouter();
   const { movieId } = useParams();
 
@@ -40,6 +41,11 @@ const MovieAddEditPage = () => {
     !movieByMovieId ? sendRequest : sendRequestPUT,
     {
       onSuccess() {
+         mutate(
+           (key) => true,
+           undefined, // update cache data to `undefined`
+           { revalidate: false } // do not revalidate
+         );
         toast.success(!movieByMovieId ? "Movie added" : "Movie updated");
         movieByMovieId && router.push("/");
         form.reset();
