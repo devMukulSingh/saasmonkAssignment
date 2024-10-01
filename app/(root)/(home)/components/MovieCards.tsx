@@ -5,10 +5,12 @@ import { Imovie } from '@/lib/types';
 import { prisma } from '@/lib/prisma';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/utils';
+import { useParams, useSearchParams } from 'next/navigation';
 
 const MovieCards = () => {
 
-  const {  data:movies,isLoading } = useSWR<Imovie[]>(`/api/movie/get-movies`,fetcher);
+  
+  const {  data:movies,isLoading,mutate } = useSWR<Imovie[]>(`/api/movie/get-movies`,fetcher);
     return (
       <div
         className="
