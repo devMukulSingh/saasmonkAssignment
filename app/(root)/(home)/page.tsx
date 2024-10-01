@@ -1,7 +1,6 @@
-import dynamic from "next/dynamic";
+export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import HomePage from "./components/HomePage";
-export const dynamicParams = true;
 
 export default function Home() {
   return (
