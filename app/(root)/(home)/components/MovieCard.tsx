@@ -40,7 +40,6 @@ const MovieCard = ({ movie }: Props) => {
     `/api/movie/${movie.id}`,
     sendRequest,
     {
-      populateCache:true,
       revalidate:true,
       onSuccess() {
        router.refresh();
