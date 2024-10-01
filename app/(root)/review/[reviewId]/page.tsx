@@ -12,9 +12,19 @@ const ReviewAddEditPage = () => {
   const { data, isLoading } = useSWR<Ireview>(
     reviewId !== "new" ? `/api/review/${reviewId} ` : null,fetcher
   );
+  console.log(data);
+  
   return(
-
-    <ReviewForm intialValues={data}/>
+    <>
+    {
+      !isLoading ?  
+      <ReviewForm intialValues={data}/> : 
+      <>
+      loading...
+      </>
+      
+    }
+    </>
   )
 };
 
