@@ -41,7 +41,7 @@ const MovieAddEditPage = () => {
     !movieByMovieId ? sendRequest : sendRequestPUT,
     {
       onSuccess() {
-         router.refresh();
+        router.refresh();
         mutate(
           (key) => true,
           undefined, // update cache data to `undefined`

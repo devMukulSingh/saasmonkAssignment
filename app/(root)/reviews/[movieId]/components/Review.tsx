@@ -28,7 +28,7 @@ const Review = ({ review }: Props) => {
     sendRequest,
     {
       onSuccess() {
-         router.refresh();
+        router.refresh();
         mutate(
           (key) => true,
           undefined, // update cache data to `undefined`

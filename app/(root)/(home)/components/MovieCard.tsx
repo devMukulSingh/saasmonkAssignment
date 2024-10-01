@@ -39,8 +39,8 @@ const MovieCard = ({ movie }: Props) => {
     sendRequest,
     {
       onSuccess() {
-        router.refresh();
         mutate((key) => true, undefined, { revalidate: false });
+        router.refresh();
         toast.success(`Movie deleted`);
       },
       onError(e) {
