@@ -46,11 +46,8 @@ const MovieForm = ({
     movieId==='new' ? sendRequest : sendRequestPUT,
     {
       onSuccess() {
-        mutate(
-          (key) => true,
-          undefined, // update cache data to `undefined`
-          { revalidate: false } // do not revalidate
-        );
+        router.refresh();
+     
         toast.success(movieId === "new" ? "Movie added" : "Movie updated");
         movieId !== "new" && router.push("/");
         form.reset();

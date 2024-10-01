@@ -29,11 +29,6 @@ const Review = ({ review }: Props) => {
     {
       onSuccess() {
         router.refresh();
-        mutate(
-          (key) => true,
-          undefined, // update cache data to `undefined`
-          { revalidate: false }, // do not revalidate
-        );
         router.push("/");
         toast.success("Review deleted");
       },

@@ -46,11 +46,7 @@ const ReviewForm = ({ intialValues }: Props) => {
     reviewId==='new' ? sendRequestPOST : sendRequestPUT,
     {
       onSuccess() {
-        mutate(
-          (key) => true,
-          undefined, // update cache data to `undefined`
-          { revalidate: false } // do not revalidate
-        );
+       router.refresh();
         router.back();
         toast.success(reviewId!=='new' ? "Review updated" : "Review added");
         form.reset();

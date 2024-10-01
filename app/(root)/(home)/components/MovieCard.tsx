@@ -24,6 +24,7 @@ async function sendRequest(url: string) {
 const MovieCard = ({ movie }: Props) => {
   const { mutate } = useSWRConfig();
   const [openDialog, setOpenDialog] = useState(false);
+  const router = useRouter();
 
   const { data: reviews } = useSWR<Ireview[]>(
     `/api/review/get-review?movieId=${movie.id}`,
@@ -39,7 +40,8 @@ const MovieCard = ({ movie }: Props) => {
     sendRequest,
     {
       onSuccess() {
-        mutate((key) => true, undefined, { revalidate: false });
+      
+       router.refresh();
         toast.success(`Movie deleted`);
       },
       onError(e) {
