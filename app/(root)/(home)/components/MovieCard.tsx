@@ -1,9 +1,19 @@
+import { Imovie } from '@/lib/types'
 import { Edit, Trash, Trash2 } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 
-const RatingCard = () => {
+type Props = {
+  movie : Imovie
+}
+
+const MovieCard = ({
+  movie
+}:Props) => {
   return (
-    <div className='
+    <Link 
+    href={`reviews/${movie.id}`}
+    className='
     bg-slate-300
     flex
     flex-col
@@ -15,13 +25,13 @@ const RatingCard = () => {
     relative
     '>
     <h1>
-        Star Wars : A New Hope    
+        {movie.name} 
     </h1> 
     <h1 className='italic'>
-        Released: 1st August, 2022
+        Released: {movie.releaseDate}
     </h1>
     <h1 className='font-bold'>
-        Ratings: 8.33/10
+        Ratings: {movie?.averageRating || 'N/A'} 
     </h1>
     <div className='
     text-neutral-600 
@@ -36,8 +46,8 @@ const RatingCard = () => {
         <Edit size={20}/>
         <Trash2 size={20}/>
     </div>
-    </div>
+    </Link>
   )
 }
 
-export default RatingCard
+export default MovieCard
