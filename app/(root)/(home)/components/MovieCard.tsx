@@ -11,6 +11,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { fetcher } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 
 type Props = {
   movie: Imovie;
@@ -21,7 +22,6 @@ async function sendRequest(url: string) {
 }
 
 const MovieCard = ({ movie }: Props) => {
-  const router = useRouter();
   const { mutate } = useSWRConfig();
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -40,11 +40,11 @@ const MovieCard = ({ movie }: Props) => {
     {
       onSuccess() {
         mutate((key) => true, undefined, { revalidate: false });
-        router.refresh();
+        revalidatePath('/')
         toast.success(`Movie deleted`);
       },
       onError(e) {
-        toast.error("Sowething went wrong, please try again later");
+        toast.error("Something went wrong, please try again later");
         console.log(e.message);
       },
     },
