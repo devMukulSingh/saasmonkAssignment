@@ -22,6 +22,7 @@ export async function POST(req:NextRequest,res:NextResponse){
             data:{
                 reviewerName,
                 rating,
+                reviewComments,
                 movie:{
                     connect:{
                         id: movieId

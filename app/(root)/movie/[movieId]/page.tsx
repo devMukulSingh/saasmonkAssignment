@@ -11,6 +11,9 @@ import { Button } from '@/components/ui/button'
 import useSWRMutation from "swr/mutation";
 import axios from "axios";
 import toast from 'react-hot-toast'
+import { useParams, useRouter } from 'next/navigation'
+import useSWR from 'swr'
+import { Imovie } from '@/lib/types'
 
 export type formValues = z.infer<typeof movieSchema>
 
@@ -21,23 +24,43 @@ export interface Iform {
 export async function sendRequest(url:string,{arg} :{arg:formValues}){
   return await axios.post(url,arg)
 }
+export async function sendRequestPUT(url: string, { arg }: { arg: formValues }) {
+  return await axios.put(url, arg);
+}
 
 const MovieAddEditPage = () => {
-  const {  trigger,isMutating } = useSWRMutation("/api/movie/add-movie", 
-    sendRequest,
-  {
-    onSuccess(){
-      toast.success('Movie added');
-      form.reset();
-    },
-    onError(e){
-      toast.error(`Something went wrong, please try again later`)
-      console.log(e);
+  const router = useRouter();
+  const { movieId  } = useParams();
+  console.log(movieId);
+  
+  const { data: movies, isLoading } = useSWR<Imovie[]>(
+    `/api/movie/get-movies`,
+  );
+  const movieByMovieId = movies?.find( movie => movie.id===movieId) || {
+    name:'',
+    releaseDate:''
+  };
+
+
+
+  const { trigger, isMutating } = useSWRMutation(
+    !movieByMovieId ? "/api/movie/add-movie" : `/api/movie/${movieId}`,
+    !movieByMovieId ? sendRequest : sendRequestPUT,
+    {
+      onSuccess() {
+        toast.success( !movieByMovieId ? "Movie added" : 'Movie updated')
+        movieByMovieId && router.push('/') 
+        form.reset();
+      },
+      onError(e) {
+        toast.error(`Something went wrong, please try again later`);
+        console.log(e);
+      },
     }
-  }
   );
   const form = useForm<formValues>({
-    resolver:zodResolver(movieSchema)
+    resolver:zodResolver(movieSchema),
+    defaultValues:movieByMovieId
   })
   const onSubmit = (data: formValues) => {
     trigger(data)
@@ -62,7 +85,9 @@ const MovieAddEditPage = () => {
       gap-5
       "
       >
-        <h1 className="text-lg">Add new movie</h1>
+        <h1 className="text-lg">
+          {movieByMovieId ? "Edit movie" : "Add new movie"}
+        </h1>
         <form
           className="
         flex
@@ -75,11 +100,8 @@ const MovieAddEditPage = () => {
             <MovieNameField form={form} isMutating={isMutating} />
             <ReleaseDateField form={form} isMutating={isMutating} />
           </Form>
-          <Button 
-          disabled={isMutating}  
-          className="ml-auto" 
-          type="submit">
-            Create movie
+          <Button disabled={isMutating} className="ml-auto" type="submit">
+            {movieByMovieId ? "Update movie" : "  Create movie"}
           </Button>
         </form>
       </div>

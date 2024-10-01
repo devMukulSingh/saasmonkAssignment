@@ -1,5 +1,5 @@
-import MovieCards from "./components/MovieCards";
 import SearchBar from "./components/SearchBar";
+import MovieCards from "./components/MovieCards";
 
 export default function Home() {
   return (

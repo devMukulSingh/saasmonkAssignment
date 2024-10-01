@@ -1,33 +1,34 @@
+'use client'
 import { Ireview } from '@/lib/types'
 import React from 'react'
 import Review from './Review';
+import { useParams } from 'next/navigation';
+import useSWR from 'swr';
+import { fetcher } from '@/lib/utils';
+import toast from 'react-hot-toast';
 
 const AllReviews = () => {
-    const reviews: Ireview[] = [
-      {
-        movieId: 1,
-        rating: 7,
-        reviewComments: "This is the best movie ever",
-        reviewerName: "Amitav Khandelwal",
+
+  const { movieId } = useParams();
+  const { data: reviews, isLoading } = useSWR<Ireview[]>(
+    `/api/review/get-review?movieId=${movieId}`,
+    fetcher,
+    {
+      onError(e){
+        toast.error(`Something went wrong, please try again later`);
+        console.log(e);
       },
-      {
-        movieId: 1,
-        rating: 7,
-        reviewComments: "This is the best movie ever",
-        reviewerName: "Amitav Khandelwal",
-      }
-      ,
-      {
-        movieId: 1,
-        rating: 7,
-        reviewComments: "This is the best movie ever",
-        reviewerName: "Amitav Khandelwal",
-      },
-    ];
+      revalidateOnFocus: false,
+    },
+
+  );
+  console.log(reviews);
+  
+
   return (
     <div className='space-y-5'>
         {
-            reviews.map( (review,index) => (
+            reviews?.map( (review,index) => (
                 <Review review={review} key={index}/>
             ))    
         }

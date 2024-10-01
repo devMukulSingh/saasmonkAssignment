@@ -22,4 +22,5 @@ model Review{
   movie                       Movie                 @relation("movieToReview",fields: [movieId],references: [id])
   reviewerName                String?
   rating                      Int
+  reviewComments              String                @db.VarChar(500)
 }

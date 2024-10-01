@@ -8,7 +8,7 @@ export const movieSchema = z.object({
     }).max(200, {
         message: 'Max 200 characters allowed'
     }),
-    releaseDate:z.coerce.date({
+    releaseDate:z.coerce.string({
         required_error:'date is required'
     })
 })

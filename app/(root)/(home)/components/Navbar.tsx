@@ -5,11 +5,9 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <Link
-      href={"/"}
-      className="px-8 h-20 bg-neutral-300 flex justify-between items-center"
+    <div className="px-8 h-20 bg-neutral-300 flex justify-between items-center"
     >
-      <h1>MOVIECRITIC</h1>
+      <Link href={'/'}>MOVIECRITIC</Link>
       <div className="flex gap-2">
         <StyledLink 
         href={"/movie/new"}
@@ -27,7 +25,7 @@ const Navbar = () => {
           Add new review
         </StyledLink>
       </div>
-    </Link>
+    </div>
   );
 };
 
