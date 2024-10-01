@@ -44,7 +44,6 @@ const ReviewAddEditPage = () => {
     !reviewByReviewId ? sendRequestPOST : sendRequestPUT,
     {
       onSuccess() {
-        router.refresh();
         mutate(
           (key) => true,
           undefined, // update cache data to `undefined`
@@ -110,12 +109,15 @@ const ReviewAddEditPage = () => {
         "
           onSubmit={form.handleSubmit(onSubmit)}
         >
+            {
+          !isLoading ?
           <Form {...form}>
-            <MovieNameField form={form} isMutating={isMutating} />
+              <MovieNameField form={form} isMutating={isMutating} />
             <ReviewerNameField form={form} isMutating={isMutating} />
             <RatingField form={form} isMutating={isMutating} />
             <ReviewCommentsField form={form} isMutating={isMutating} />
-          </Form>
+          </Form> : <>loading...</>
+            }
           <Button disabled={isMutating} className="ml-auto" type="submit">
             {reviewByReviewId ? "Continue" : "Add review"}
           </Button>

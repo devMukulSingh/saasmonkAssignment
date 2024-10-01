@@ -40,7 +40,7 @@ const MovieCard = ({ movie }: Props) => {
     {
       onSuccess() {
         mutate((key) => true, undefined, { revalidate: false });
-        revalidatePath('/')
+        revalidatePath('/','page')
         toast.success(`Movie deleted`);
       },
       onError(e) {
