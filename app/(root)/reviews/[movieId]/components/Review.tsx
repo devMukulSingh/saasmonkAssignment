@@ -27,6 +27,7 @@ const Review = ({ review }: Props) => {
     `/api/review/${review.id}`,
     sendRequest,
     {
+      revalidate: true,
       onSuccess() {
         router.refresh();
         router.push("/");
@@ -36,7 +37,7 @@ const Review = ({ review }: Props) => {
         console.log(e.message);
         toast.error(`Something went wrong please try again later`);
       },
-    },
+    }
   );
   const handleDelete = () => {
     try {

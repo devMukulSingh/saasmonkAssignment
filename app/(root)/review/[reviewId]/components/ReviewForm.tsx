@@ -45,6 +45,7 @@ const ReviewForm = ({ intialValues }: Props) => {
     reviewId==='new' ? `/api/review/add-review` : `/api/review/${reviewId}`,
     reviewId==='new' ? sendRequestPOST : sendRequestPUT,
     {
+      revalidate:true,
       onSuccess() {
        router.refresh();
         router.back();

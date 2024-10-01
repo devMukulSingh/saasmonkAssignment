@@ -42,12 +42,13 @@ const MovieForm = ({
   
 
   const { trigger, isMutating } = useSWRMutation(
-    movieId==='new' ? "/api/movie/add-movie" : `/api/movie/${movieId}`,
-    movieId==='new' ? sendRequest : sendRequestPUT,
+    movieId === "new" ? "/api/movie/add-movie" : `/api/movie/${movieId}`,
+    movieId === "new" ? sendRequest : sendRequestPUT,
     {
+      revalidate: true,
       onSuccess() {
         router.refresh();
-     
+
         toast.success(movieId === "new" ? "Movie added" : "Movie updated");
         movieId !== "new" && router.push("/");
         form.reset();
