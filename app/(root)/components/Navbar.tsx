@@ -3,7 +3,7 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <div className='h-20 bg-neutral-300 flex justify-between items-center'>
+    <div className='px-8 h-20 bg-neutral-300 flex justify-between items-center'>
         <h1>MOVIECRITIC</h1>
         <div className='flex gap-2'>
             <Button variant="outline">
