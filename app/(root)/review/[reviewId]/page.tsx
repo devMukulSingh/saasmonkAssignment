@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import useSWR, { useSWRConfig } from "swr";
 import { fetcher } from "@/lib/utils";
+import { Ireview } from "@/lib/types";
 
 export type formValues = z.infer<typeof reviewSchema>;
 
@@ -34,7 +35,7 @@ const ReviewAddEditPage = () => {
   const { mutate } = useSWRConfig();
   const { reviewId } = useParams();
   const router = useRouter();
-  const { data: reviewByReviewId, isLoading } = useSWR(
+  const { data: reviewByReviewId, isLoading } = useSWR<Ireview>(
     reviewId !== "new" ? `/api/review/${reviewId} ` : null,
     fetcher,
   );
@@ -61,7 +62,12 @@ const ReviewAddEditPage = () => {
   );
   const form = useForm<formValues>({
     resolver: zodResolver(reviewSchema),
-    defaultValues: reviewByReviewId
+    defaultValues: {
+      reviewerName:reviewByReviewId?.reviewerName,
+      rating:reviewByReviewId?.rating,
+      reviewComments:reviewByReviewId?.reviewComments,
+      movieId:reviewByReviewId?.movieId
+    }
   });
   const onSubmit = (data: formValues) => {
     try {
